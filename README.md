@@ -11,8 +11,12 @@ Clone the repository to you desktop or Raspberry Pi, go to the root directory an
 
 ## Usage
 
-Start the application from the root directory using `python display.py`.
+Start the application from the root directory using `python display.py`, startup messages similar to those shown below will be displayed.
 
-[logo]: https://github.com/sinoia/net_display/raw/master/documentation/startup_messages.png "Startup messages"
+![startup messages](https://github.com/sinoia/net_display/raw/master/documentation/startup_messages.png)
+
+The hostname will be the name of you host where the software is running. Once the software is running open a browser and enter the url shown. The default display will be displayed something like this:
+
+![default display](https://github.com/sinoia/net_display/raw/master/documentation/default_screen.png)
 
 By default the application runs on port 8888, but this can be changed by passing the port number on the start command: `python display.py --port=9999`
