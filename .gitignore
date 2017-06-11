@@ -83,6 +83,7 @@ celerybeat-schedule
 .env
 
 # virtualenv
+net_display/
 .venv
 venv/
 ENV/

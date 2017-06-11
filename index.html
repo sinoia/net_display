@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Wireless Screen</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.js"></script>
+</head>
+
+<body>
+
+    <h2 id="page_title">Network Display</h2>
+    <p id="connection_status"></p>
+    <div id="message">
+        <p>You network display is running and ready to receive messages.</p>
+        <p>Try:</p>
+        <p>curl http://{{ host }}:{{ port }}/msg -XPUT -d '{"id": "message", "message": "Hello World"}'</p>
+        <p>to see the message on this screen.</p>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var ws = new WebSocket("ws://{{ host }}:{{ port }}/socket");
+
+            ws.onopen = function(evt) {
+                var connection_status = document.getElementById('connection_status');
+                connection_status.innerHTML = "Status: Connected!"
+            };
+
+            ws.onmessage = function(evt) {
+                msg = JSON.parse(evt.data);
+                element = document.getElementById(msg['id']);
+                element.innerHTML = msg['message'];
+            };
+
+            ws.onclose = function(evt) {
+                var connection_status = document.getElementById('connection_status');
+                connection_status.innerHTML = "Status: Disconnected!"
+            };
+        });
+    </script>
+</body>
+
+</html>
