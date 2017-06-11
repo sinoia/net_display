@@ -7,15 +7,15 @@ The software is written in python and uses the Tornado web framework (http://www
 
 ## Setup
 
-Clone the repository to you desktop or Raspberry Pi, go to the root directory and run and run
-
+Clone the repository to you desktop or Raspberry Pi, go to the root directory and run:
 `pip install -r requirements.txt`
-
 to install the dependencies (the tornado web framework).
 
 ## Usage
 
-Start the application from the root directory using `python display.py`, startup messages similar to those shown below will be displayed.
+Start the application from the root directory using
+`python display.py`
+Startup messages similar to those shown below will be displayed.
 
 ![startup messages](https://github.com/sinoia/net_display/raw/master/documentation/startup_messages.png)
 
