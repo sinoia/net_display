@@ -51,6 +51,7 @@ There are only two elements that can be changed, they are:
 So these two commands:
 * `curl http://<hostname>:8888/msg -XPUT -d '{"id": "page_title", "message": "Raspberry Pi HyperPixel Display"}'`
 * `curl http://<hostname>:8888/msg -XPUT -d '{"id": "message", "message": "Today will be mostly sunny!"}'`
+
 will result in a display that looks like this:
 
 ![Raspberry Pi Hyperpixel!](https://github.com/sinoia/net_display/raw/master/documentation/hyperpixel_message.jpg)
