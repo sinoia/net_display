@@ -3,11 +3,14 @@ Simple web site for displaying sensor data, status information or other content.
 
 The software is designed to be useful when implementing wireless displays; a networked screen that can be used to display sensor data or other content. The software runs well on a Raspberry Pi which can be used to make a good networked display.
 
-The software is written in python and use the Tornado web framework (http://www.tornadoweb.org/en/stable/).
+The software is written in python and uses the Tornado web framework (http://www.tornadoweb.org/en/stable/).
 
 ## Setup
 
-Clone the repository to you desktop or Raspberry Pi, go to the root directory and run and run `pip install -r requirements.txt` to install the dependencies (the tornado web framework).
+Clone the repository to you desktop or Raspberry Pi, go to the root directory and run and run
+``` pip install -r requirements.txt
+```
+to install the dependencies (the tornado web framework).
 
 ## Usage
 
@@ -19,8 +22,8 @@ The hostname will be the name of you host where the software is running. Once th
 
 ![default display](https://github.com/sinoia/net_display/raw/master/documentation/default_screen.png)
 
-By default the application runs on port 8888, but this can be changed by passing the port number on the start command: `python display.py --port=9999`
-
+By default the application runs on port 8888, but this can be changed by passing the port number on the start command: ```python display.py --port=9999
+```
 ## Using the display
 
 Once the display is running messages can be sent to be displayed. Messages are json strings and are sent using an http PUT method to the API end point `/msg`.
@@ -40,8 +43,8 @@ This http PUT will display the message `"Hello World"` on the display.
 The display screen is an html page containing a few items to be displayed on the screen. Each of these items has an element `id`. The json http PUT to the API contains the id of the element and the contents for that element.
 
 There are only two elements that can be changed, they are:
-* ```html <h2 id="page_title">Network Display</h2>```
-* ```html <div id="message">```
+* ``` <h2 id="page_title">Network Display</h2>```
+* ``` <div id="message">```
 
 So these two commands:
 * `curl http://<hostname>:8888/msg -XPUT -d '{"id": "page_title", "message": "Raspberry Pi HyperPixel Display"}'`
