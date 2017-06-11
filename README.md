@@ -20,3 +20,28 @@ The hostname will be the name of you host where the software is running. Once th
 ![default display](https://github.com/sinoia/net_display/raw/master/documentation/default_screen.png)
 
 By default the application runs on port 8888, but this can be changed by passing the port number on the start command: `python display.py --port=9999`
+
+## Using the display
+
+Once the display is running messages can be sent to be displayed. Messages are json strings and are sent using an http PUT method to the API end point `/msg`.
+
+An easy way to use an http PUT is using curl, for example:
+
+`curl http://<hostname>:8888/msg -XPUT -d '{"id": "message", "message": "Hello World"}'`
+
+Where `<hostname>` is the name of the host running the display.
+
+This http PUT will display the message `"Hello World"` on the display.
+
+![default display](https://github.com/sinoia/net_display/raw/master/documentation/send_message.png)
+
+## How It Works
+
+The display screen is an html page containing a few items to be displayed on the screen. Each of these items has an element `id`. The json http PUT to the API contains the id of the element and the contents for that element.
+
+There are only two elements that can be changed, they are:
+* ```html <h2 id="page_title">Network Display</h2>```
+* ```html <div id="message">```
+
+So this command:
+`curl http://<hostname>:8888/msg -XPUT -d '{"id": "message", "message": "Hello World"}'`
