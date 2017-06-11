@@ -8,8 +8,9 @@ The software is written in python and uses the Tornado web framework (http://www
 ## Setup
 
 Clone the repository to you desktop or Raspberry Pi, go to the root directory and run and run
-``` pip install -r requirements.txt
-```
+
+`pip install -r requirements.txt`
+
 to install the dependencies (the tornado web framework).
 
 ## Usage
@@ -22,8 +23,9 @@ The hostname will be the name of you host where the software is running. Once th
 
 ![default display](https://github.com/sinoia/net_display/raw/master/documentation/default_screen.png)
 
-By default the application runs on port 8888, but this can be changed by passing the port number on the start command: ```python display.py --port=9999
-```
+By default the application runs on port 8888, but this can be changed by passing the port number on the start command:
+`python display.py --port=9999`
+
 ## Using the display
 
 Once the display is running messages can be sent to be displayed. Messages are json strings and are sent using an http PUT method to the API end point `/msg`.
