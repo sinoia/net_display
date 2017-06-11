@@ -44,11 +44,11 @@ There are only two elements that can be changed, they are:
 * ```html <div id="message">```
 
 So these two commands:
-`curl http://<hostname>:8888/msg -XPUT -d '{"id": "page_title", "message": "Raspberry Pi HyperPixel Display"}'`
-`curl http://<hostname>:8888/msg -XPUT -d '{"id": "message", "message": "Today will be mostly sunny!"}'`
+* `curl http://<hostname>:8888/msg -XPUT -d '{"id": "page_title", "message": "Raspberry Pi HyperPixel Display"}'`
+* `curl http://<hostname>:8888/msg -XPUT -d '{"id": "message", "message": "Today will be mostly sunny!"}'`
 will result in a display that looks like this:
 
-![Raspberry Pi Hyperpixel!](https://github.com/sinoia/net_display/raw/master/documentation/hyperpixel_message.png)
+![Raspberry Pi Hyperpixel!](https://github.com/sinoia/net_display/raw/master/documentation/hyperpixel_message.jpg)
 
 The above image is of a Raspberry PI 2 with a HyperPixel hat running Chromium in kiosk mode. With this device on the network it is quick and easy to display sensor data as it is collected.
 
