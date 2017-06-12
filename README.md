@@ -60,13 +60,11 @@ There are only two elements that can be changed, they are:
 * ``` <div id="message">```
 
 So these two commands:
-* `curl -X PUT -d "Raspberry Pi HyperPixel Display" http://<hostname>:8888/update/page_title`
+* `curl -X PUT -d "Weather Report" http://<hostname>:8888/update/page_title`
 * `curl -X PUT -d "Today will be mostly sunny!" http://<hostname>:8888/update/message`
 will result in a display that looks like this:
 
-![Raspberry Pi Hyperpixel!](https://github.com/sinoia/net_display/raw/master/documentation/hyperpixel_message.jpg)
-
-The above image is a Raspberry PI 2 with a HyperPixel hat running Chromium in kiosk mode. With this device on the network it is a simple matter to display sensor data as it is collected.
+![Changing the title](https://github.com/sinoia/net_display/raw/master/documentation/title_change.png)
 
 By default the application runs on port 8888, but this can be changed by passing the port number on the start command:
 
@@ -79,3 +77,12 @@ The examples directory includes some examples of using the API to display variou
 A simple script to send any message to the display. The message is passed as the first parameter to the script. The script is assumed to be running on the same host as the display.
 
 `send_msg.sh Hello World`
+
+## display a picture
+The send_msg.sh script can be used to display images on your display. The message is set to an html image tag, the source being the URL to the image. The example below will show an nice landscape image from (https://www.pexels.com/)
+
+`./send_msg.sh '<img src="https://images.pexels.com/photos/169738/pexels-photo-169738.jpeg?w=785&auto=compress&cs=tinysrgb" style="width:785px;">'`
+
+![Raspberry Pi Hyperpixel!](https://github.com/sinoia/net_display/raw/master/documentation/hyperpixel_message.jpg)
+
+The above net display is a Raspberry PI 2 with a HyperPixel hat running Chromium in kiosk mode. With this device on the network it is a simple matter to display sensor data, images, notifications from any other host on the network.
