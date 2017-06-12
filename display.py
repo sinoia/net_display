@@ -9,6 +9,8 @@ import datetime
 import socket
 
 clients = []
+msg_history = []
+
 root = os.path.dirname(__file__)
 hostname = socket.gethostname()
 # can be started on a different port using --port=9999 on when starting
@@ -16,12 +18,23 @@ define("port", default="8888", help="Bind to port number")
 tornado.options.parse_command_line()
 
 def sendMsg(message):
+    """ Iterate through the list of currently connected clients and send the
+    message through the open web socket. The sent message is recorded in the
+    message history array. This histort is used to recreate the display
+    when a new client connects or reconnects
+    """
     for client in clients:
         if not client.ws_connection.stream.socket:
             print("client disconnected\n")
             clients.remove(client)
         else:
             client.write_message(message)
+    # store the message in the message history array, only the last message
+    # for each distinct id is stored.
+    msg = json.loads(message)
+    # remove any exisitng message for this id from the array
+    msg_history[:] = [m for m in msg_history if m.get('id') != msg.get('id')]
+    msg_history.append(msg)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -29,15 +42,26 @@ class MainHandler(tornado.web.RequestHandler):
 
 class MsgHandler(tornado.web.RequestHandler):
     def put(self):
-      # msg = json.loads(self.request.body)
       msg = self.request.body
-      sendMsg(msg)
+      sendMsg(json.dumps({'id': 'message', 'message': msg.decode("utf-8")}))
+
+class UpdateHandler(tornado.web.RequestHandler):
+    def put(self, element_id):
+      msg = self.request.body
+      sendMsg(json.dumps({'id': element_id, 'message': msg.decode("utf-8")}))
 
 class SocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
+        """Called when a new client connects. Store the new client in the list
+        of clients. Send any messages in the message history to the client.
+        """
         print('new client connected.\n')
         if self not in clients:
             clients.append(self)
+            # now send the message history to this new client
+            for msg in msg_history:
+                self.write_message(json.dumps(msg))
+
     def on_close(self):
         print('connection closed\n')
         if self in clients:
@@ -49,14 +73,14 @@ def make_app():
         (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': './images'}),
         (r'/socket', SocketHandler),
         (r'/msg', MsgHandler),
+        (r'/update/([^/]+)', UpdateHandler),
         (r'/', MainHandler),
     ], template_path=root)
 
 if __name__ == "__main__":
     print("Starting display; visit http://"+hostname+":"+str(options.port)
          +" to see the display.")
-    print("Try: curl http://"+hostname+":"+options.port
-         +"/msg -XPUT -d '{\"id\": \"message\", \"message\": \"Hello World\"}'")
+    print("Try: curl -X PUT -d 'Hello World' http://"+hostname+":"+options.port+"/msg")
     app = make_app()
     app.listen(options.port)
     tornado.ioloop.IOLoop.current().start()

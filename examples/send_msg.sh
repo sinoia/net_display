@@ -1,3 +1,2 @@
 hostname=$(hostname)
-msg_text=${1}
-curl http://${hostname}:8888/msg -XPUT -d '{"id": "message", "message": "'"${msg_text}"'"}'
+curl -X PUT -d "$*" http://${hostname}:8888/msg
