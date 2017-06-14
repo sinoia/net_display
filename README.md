@@ -29,7 +29,7 @@ The hostname will be the name of you host where the software is running. Once th
 
 The connection status is indicated by the socket status indicator at the top of the screen on the right. Green shows the socket is connected and red not connected. The display will only be updated when the socket is connected (green).
 
-## Using the display
+## Using the Display
 
 Once the display is running messages can be sent to be displayed. Messages are strings and are sent using an http PUT method to the API end point `/message`.
 
@@ -58,6 +58,7 @@ On the default page here are only two elements that can be changed, they are:
 So these two commands:
 * `curl -X PUT -d "Weather Report" http://<hostname>:8888/page_title`
 * `curl -X PUT -d "Today will be mostly sunny!" http://<hostname>:8888/message`
+
 will result in a display that looks like this:
 
 ![Changing the title](https://github.com/sinoia/net_display/raw/master/documentation/title_change.png)
@@ -108,4 +109,4 @@ r = requests.put(url+'/disc', data = '30')
 
 The resulting display:
 
-![Dashboard Example!](https://github.com/sinoia/net_display/raw/master/documentation/dashbooard_example.png)
+![Dashboard Example!](https://github.com/sinoia/net_display/raw/master/documentation/dashboard_example.png)
