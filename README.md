@@ -21,12 +21,10 @@ Start the application from the root directory using
 
 Startup messages similar to those shown below will be displayed.
 
-TODO - update this image
 ![startup messages](https://github.com/sinoia/net_display/raw/master/documentation/startup_messages.png)
 
 The hostname will be the name of you host where the software is running. Once the software is running open a browser and visit the URL shown in the startup messages. The default display will be shown and it looks something like this:
 
-TODO - update this image
 ![default display](https://github.com/sinoia/net_display/raw/master/documentation/default_screen.png)
 
 The connection status is indicated by the socket status indicator at the top of the screen on the right. Green shows the socket is connected and red not connected. The display will only be updated when the socket is connected (green).
@@ -43,7 +41,6 @@ Where `<hostname>` is the name of the host running the display.
 
 This http PUT will display the message `"Hello World"` on the display.
 
-TODO - update this image
 ![default display](https://github.com/sinoia/net_display/raw/master/documentation/send_message.png)
 
 ## How It Works
@@ -63,7 +60,6 @@ So these two commands:
 * `curl -X PUT -d "Today will be mostly sunny!" http://<hostname>:8888/message`
 will result in a display that looks like this:
 
-TODO - update this image
 ![Changing the title](https://github.com/sinoia/net_display/raw/master/documentation/title_change.png)
 
 By default the application runs on port 8888, but this can be changed by passing the port number on the start command:
@@ -88,5 +84,28 @@ The send_msg.sh script can be used to display images on your display. The messag
 The above net display is a Raspberry PI 2 with a HyperPixel hat running Chromium in kiosk mode. With this device on the local network it is a simple matter to display sensor data, images or notifications from any other host on the network.
 
 ## Build a Dashboard
+It is possible to build dashboards using multiple updates to the `message` element. The example dashboard.py shows how this can be done.
 
-## Web content
+First an html table is sent to the `/message` element. The element is updated with the html.
+
+```python
+html = '''
+<table>
+<tr><th>CPU</th><td id="cpu"></td></tr>
+<tr><th>Memory</th><td id="mem"></td></tr>
+<tr><th>Storage</th><td id="disc"></td></tr>
+</table>
+'''
+r = requests.put(url+'/message', data = html)
+```
+This html creates three new element ids which can then be updated with values, like this:
+
+```python
+r = requests.put(url+'/cpu', data = '10')
+r = requests.put(url+'/mem', data = '20')
+r = requests.put(url+'/disc', data = '30')
+```
+
+The resulting display:
+
+![Dashboard Example!](https://github.com/sinoia/net_display/raw/master/documentation/dashbooard_example.png)
