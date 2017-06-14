@@ -26,13 +26,8 @@
 
 <body>
     <div id="socket_status" class="socket_status not_connected">&#x25C9;</div>
-    <h2 id="page_title">Network Display</h2>
-    <div id="message">
-        <p>You network display is running and ready to receive messages.</p>
-        <p>Try:</p>
-        <p>curl -X PUT -d "Hello World" http://{{ host }}:{{ port }}/msg</p>
-        <p>to see the message on this screen.</p>
-    </div>
+    <h2 id="page_title"></h2>
+    <div id="message"></div>
 
     <script>
         $(document).ready(function() {
