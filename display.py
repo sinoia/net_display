@@ -57,7 +57,6 @@ class ElementHandler(tornado.web.RequestHandler):
         except:
             raise tornado.web.HTTPError(404)
 
-
 class SocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         """Called when a new client connects. Store the new client in the list
@@ -79,6 +78,7 @@ def make_app():
     return tornado.web.Application([
         (r'/(favicon.ico)', tornado.web.StaticFileHandler, {'path': ''}),
         (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': './images'}),
+        (r'/static/(.*)', tornado.web.StaticFileHandler, {'path': os.path.join(root, 'static')}),
         (r'/socket', SocketHandler),
         (r'/([^/]+)', ElementHandler),
         (r'/', MainHandler),
