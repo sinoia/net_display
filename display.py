@@ -51,8 +51,12 @@ class ElementHandler(tornado.web.RequestHandler):
       msg = self.request.body
       sendMsg(json.dumps({'id': element_id, 'message': msg.decode("utf-8")}))
     def get(self, element_id):
-      msg = next((msg for msg in msg_history if msg.get('id') == element_id), 'Error!')
-      self.write(msg['message'])
+        try:
+            msg = next((msg for msg in msg_history if msg.get('id') == element_id))
+            self.write(msg['message'])
+        except:
+            raise tornado.web.HTTPError(404)
+
 
 class SocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
@@ -76,7 +80,6 @@ def make_app():
         (r'/(favicon.ico)', tornado.web.StaticFileHandler, {'path': ''}),
         (r'/images/(.*)', tornado.web.StaticFileHandler, {'path': './images'}),
         (r'/socket', SocketHandler),
-        (r'/([^/]+)', ElementHandler),
         (r'/([^/]+)', ElementHandler),
         (r'/', MainHandler),
     ], template_path=root)
