@@ -5,14 +5,13 @@
     <title>Wireless Screen</title>
     <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
     <!-- <link rel="stylesheet" href="css/custom.css"> -->
 </head>
 <style>
-    .socket_status {
-        float: right;
+    html {
+        font-size: 100%;
     }
 
     .not_connected {
@@ -26,29 +25,42 @@
 
 <body>
     <div class="container">
-        <div id="socket_status" class="socket_status not_connected">&#x25C9;</div>
-        <h2 id="page_title"></h2>
-        <div id="message"></div>
+        <div class="row">
+            <div class="eight columns">
+                <h2 id="page_title"></h2></div>
+            <div class="four columns">
+                <div id="time"></div>
+                <div id="socket_status" class="not_connected">&#x25C9;</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="twelve columns">
+                <div id="message"></div>
+            </div>
+        </div>
     </div>
 
     </div>
     <script>
-        $(document).ready(function() {
+        document.addEventListener("DOMContentLoaded", function(event) {
             var ws = new WebSocket("ws://{{ host }}:{{ port }}/socket");
 
             ws.onopen = function(evt) {
-                //$("#connection_status").html("Status: Connected!")
-                $("#socket_status").removeClass('not_connected').addClass('connected')
+                document.getElementById('socket_status').classList.remove('not_connected')
+                document.getElementById('socket_status').classList.add('connected')
             };
 
             ws.onmessage = function(evt) {
                 msg = JSON.parse(evt.data);
-                $('#' + msg['id']).html(msg['message'])
+                document.getElementById(msg['id']).innerHTML = msg['message']
             };
 
             ws.onclose = function(evt) {
-                //$("#connection_status").html("Status: Disconnected!")
-                $("#socket_status").removeClass('connected').addClass('not_connected')
+                document.getElementById('socket_status').classList.remove('connected')
+                document.getElementById('socket_status').classList.add('not_connected')
+                document.getElementById(msg['time']).innerHTML = ''
+                msg['message']
+                ''
             };
         });
     </script>

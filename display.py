@@ -42,6 +42,12 @@ def sendMsg(message):
     msg_history[:] = [m for m in msg_history if m.get('id') != msg.get('id')]
     msg_history.append(msg)
 
+def sendTime():
+    """ Sends the current time to all connected clients in a time message
+        clients can then put the time on the screen"""
+    sendMsg(json.dumps({'id': 'time'
+      , 'message': datetime.datetime.now().strftime("%d %b %H:%M")}))
+
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
       self.render('index.html', host=hostname, port=options.port)
@@ -82,7 +88,7 @@ def make_app():
         (r'/socket', SocketHandler),
         (r'/([^/]+)', ElementHandler),
         (r'/', MainHandler),
-    ], template_path=root)
+    ], template_path=root, autoreload=False)
 
 if __name__ == "__main__":
     print("Starting display; visit http://"+hostname+":"+str(options.port)
@@ -90,4 +96,9 @@ if __name__ == "__main__":
     print("Try: "+config.example_curl_cmd.format(hostname, options.port))
     app = make_app()
     app.listen(options.port)
-    tornado.ioloop.IOLoop.current().start()
+
+    main_loop = tornado.ioloop.IOLoop.current()
+    time_loop = tornado.ioloop.PeriodicCallback(sendTime, 1000, io_loop = main_loop)
+
+    time_loop.start()
+    main_loop.start()
