@@ -3,4 +3,4 @@ chardet==3.0.4
 idna==2.5
 requests==2.17.3
 tornado==4.5.1
-urllib3==1.21.1
+urllib3==1.24.2
